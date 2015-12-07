@@ -11,7 +11,6 @@ var gulp  = require('gulp'),
     rename = require('gulp-rename'),
     plumber = require('gulp-plumber'),
     bower = require('gulp-bower'),
-    bower = require('browser-test'),
     bower = require('browser-sync')
 
 // Compile Sass, Autoprefix and minify
