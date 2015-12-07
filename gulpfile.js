@@ -10,8 +10,9 @@ var gulp  = require('gulp'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
     plumber = require('gulp-plumber'),
-    bower = require('gulp-bower')
-    
+    bower = require('gulp-bower'),
+    bower = require('browser-sync')
+
 // Compile Sass, Autoprefix and minify
 gulp.task('styles', function() {
   return gulp.src('./assets/scss/**/*.scss')
@@ -24,19 +25,19 @@ gulp.task('styles', function() {
             browsers: ['last 2 versions'],
             cascade: false
         }))
-    .pipe(gulp.dest('./assets/css/'))     
+    .pipe(gulp.dest('./assets/css/'))
     .pipe(rename({suffix: '.min'}))
     .pipe(minifycss())
     .pipe(gulp.dest('./assets/css/'))
-});    
-    
+});
+
 // JSHint, concat, and minify JavaScript
 gulp.task('site-js', function() {
-  return gulp.src([	
-	  
+  return gulp.src([
+
            // Grab your custom scripts
   		  './assets/js/scripts/*.js'
-  		  
+
   ])
     .pipe(plumber())
     .pipe(jshint())
@@ -46,16 +47,16 @@ gulp.task('site-js', function() {
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(gulp.dest('./assets/js'))
-});    
+});
 
 // JSHint, concat, and minify Foundation JavaScript
 gulp.task('foundation-js', function() {
-  return gulp.src([	
-  		  
+  return gulp.src([
+
   		  // Foundation core - needed if you want to use any of the components below
           './vendor/foundation-sites/js/foundation.core.js',
           './vendor/foundation-sites/js/foundation.util.*.js',
-          
+
           // Pick the components you need in your project
           './vendor/foundation-sites/js/foundation.abide.js',
           './vendor/foundation-sites/js/foundation.accordion.js',
@@ -88,9 +89,9 @@ gulp.task('foundation-js', function() {
 gulp.task('bower', function() {
   return bower({ cmd: 'update'})
     .pipe(gulp.dest('vendor/'))
-});    
+});
 
-// Create a default task 
+// Create a default task
 gulp.task('default', function() {
   gulp.start('styles', 'site-js', 'foundation-js');
 });
@@ -103,7 +104,7 @@ gulp.task('watch', function() {
 
   // Watch site-js files
   gulp.watch('./assets/js/scripts/*.js', ['site-js']);
-  
+
   // Watch foundation-js files
   gulp.watch('./vendor/foundation-sites/js/*.js', ['foundation-js']);
 
